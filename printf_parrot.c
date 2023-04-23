@@ -10,30 +10,43 @@
 int _printf(const char *format, ...)
 {
 	va_list ap;
-	char c;
+	int x = 0;
 	int index = 0;
 
 	va_start(ap, format);
-	while ((c = *format++) != '\0')
+
+	while (format && format[x])
 	{
-		if (c == '%')
+		if (format[x] == '%')
 		{
-			if (*format++ == 'c')
-				index = index + print_char(ap);
-			if (*format++ == 's')
-				index = index + print_string(ap);
-			if (*format++ == '%')
+			x++;
+			if (format[x] != '\0')
+				break;
+
+			switch (format[x])
 			{
-				_putchar('%');
-				index++;
+				case 's':
+					index = index + _putchar(va_arg(ap, char*));
+					break;
+				case 'c':
+					index = index + _putchar(va_arg(ap, int));
+				case 'i':
+					index = index + print_integer(va_arg(ap, int));
+				case 'x':
+					index = index + print_hexlower(va_arg(ap, unsigned int), 0);
+				case 'X':
+					index = index + print_hexupper(va_arg(ap, unsigned int));
+				default:
+					index = index + _putchar('%');
+					index = index + _putchar(format[x]);
+					break;
 			}
 		}
 		else
-		{
-			_putchar(c);
-			index++;
-		}
+			index = index + _putchar(format[x]);
 	}
+
 	va_end(ap);
+
 	return (index);
 }
