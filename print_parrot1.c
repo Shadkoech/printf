@@ -17,11 +17,12 @@ int change_to_string(int i, char *buffer)
 		is_num_neg = true;
 		i = -i;
 	}
-	while (i > 0)
+	do
 	{
-		buffer[length] = (i % 10) + '0';
+		buffer[length++] = (i % 10) + '0';
 		i /= 10;
-	}
+	} while (i > 0);
+
 	if (is_num_neg)
 	{
 		buffer[length++] = '-';
@@ -53,28 +54,28 @@ int _printf(const char *format, ...)
 	va_start(aps, format);
 	while (*format != '\0')
 	{
-		if (*format != '%' && (*format - 1 != '%'))
+		if (*format != '%' && (*format - 1) == '%')
 		{
 			_putchar(*format);
 			no_of_characters++;
 		}
-		if (*(format + 1) == 'c' && (*format == '%'))
+ 		else if (*(format + 1) == 'c' && (*format == '%'))
 		{
 			char c = va_arg(aps, int);
-			printf("%c", c);
+			_putchar(c);
 			no_of_characters++;
 		}
-		if (*(format + 1) == '%' && (*format == '%'))
+		else if (*(format + 1) == '%' && (*format == '%'))
 		{
-			printf("%%");
+			_putchar('%');
 			no_of_characters++;
 		}
-		if (*(format + 1) == 's' && (*format == '%'))
+		else if (*(format + 1) == 's' && (*format == '%'))
 		{
 			char *s = va_arg(aps, char *);
 			while (*s)
 			{
-				printf("s");
+				_putchar(*s);
 				no_of_characters++;
 				s++;
 			}
@@ -95,5 +96,6 @@ int _printf(const char *format, ...)
 		format++;
 	}
 	va_end(aps);
+	_putchar('\n');
 	return (no_of_characters);
 }
