@@ -11,28 +11,28 @@ char *change_unsigned_int_to_binary(unsigned int number);
 char *change_unsigned_int_to_binary(unsigned int number)
 {
 	char *binary = (char*)malloc(sizeof(char) * 33);
-	
-	unsigned int no = 1 << 31;
 	int j = 0;
+	int found_one = 0;
+
 	if (binary == NULL)
 	{
 		return (NULL);
 	}
-
-	binary[32] = '\0';
-	
-	for (j = 0; j < 32; j++)
+	for (j = 31; j >= 0; j--)
 	{
-		if (number &&  no)
+		if ((number & (1 << j)) || found_one)
 		{
-			binary[j] = '1';
+			binary[31-j] = (number & (1 << j)) ? '1' : '0';
+			found_one = 1;
 		}
-		else
+		else if (!(number & (1 << j)) && !found_one)
 		{
-			binary[j] = '0';
+			binary[31-j] = ' ';
 		}
-		no = no >> 1;
 	}
+	
+	
+	binary[32] = '\0';
 	return (binary);
 }
 
@@ -136,7 +136,14 @@ int _printf(const char *format, ...)
 				int i = 0;
 				for (i = 0; binary[i] != '\0'; i++)
 				{
-					_putchar(binary[i]);
+					if (binary[i] == ' ')
+					{
+						continue;
+					}
+					else
+					{
+						_putchar(binary[i]);
+					}
 				}
 				free(binary);
 				format++;
