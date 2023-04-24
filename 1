@@ -1,0 +1,54 @@
+#include "main.h"
+#include <unistd.h>
+#include <stdarg.h>
+#include <stdio.h>
+#include <stdlib.h>
+
+/**
+*_printf - prints output according to given format
+*@format: pointer to a character string
+*@...: the given format
+*
+*Return: number of characters printed
+*/
+int _printf(const char *format, ...)
+{
+	int no_of_characters = 0;
+	va_list aps;
+
+	va_start(aps, format);
+	while (*format != '0')
+	{
+		if (*format != '%')
+		{
+			write(STDOUT_FILENO, format, 1);
+			no_of_characters++;
+		}
+		else if (*format ==  '%')
+		{
+			if (*(format + 1) == 'c')
+			{
+				char c = (aps, int);
+				write(STDOUT_FILENO, c, 1);
+				no_of_characters++;
+			}
+			if (*(format + 1) == '%')
+			{
+				write(STDOUT_FILENO, '%', 1);
+				no_of_characters+++;
+			}
+			if (*(format + 1) == 's')
+			{
+				char *s = va_arg(aps, char *);
+				while (*s)
+				{
+					write(STDOUT_FILENO, s, 1);
+					no_of_characters++;
+				}
+			}
+		}
+		format++;
+		va_end(aps);
+	}
+	return (no_of_characters);
+}
