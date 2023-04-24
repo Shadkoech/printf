@@ -58,44 +58,51 @@ int _printf(const char *format, ...)
 		{
 			_putchar(*format);
 			no_of_characters++;
-		}
- 		else if (*(format + 1) == 'c' && (*format == '%'))
-		{
-			char c = va_arg(aps, int);
-			_putchar(c);
-			no_of_characters++;
-		}
-		else if (*(format + 1) == '%' && (*format == '%'))
-		{
-			_putchar('%');
-			no_of_characters++;
-		}
-		else if (*(format + 1) == 's' && (*format == '%'))
-		{
-			char *s = va_arg(aps, char *);
-			while (*s)
-			{
-				_putchar(*s);
-				no_of_characters++;
-				s += 2;
-			}
-		}
-		else if ((*format == '%' && *(format + 1) == 'd') || (*format == '%' && *(format + 1) == 'i'))
-		{
-			int k = va_arg(aps, int);
-			char buff[12];
-			int number_length = change_to_string(k, buff);
-			int j = 0;
 
-			for (j = 0; j < number_length; j++)
+		}
+		if (*format == '%')
+		{
+ 			if (*(format + 1) == 'c')
 			{
-			 	 _putchar(buff[j]);
-				 no_of_characters++;
+				char c = va_arg(aps, int);
+				_putchar(c);
+				no_of_characters++;
+				format++;
+			}
+			if (*(format + 1) == '%')
+			{
+				_putchar('%');
+				no_of_characters++;
+				format++;
+			}
+			if (*(format + 1) == 's')
+			{
+				char *s = va_arg(aps, char *);
+				while (*s)
+				{
+					_putchar(*s);
+					no_of_characters++;
+					s++;
+				}
+				format++;
+			}
+			if ((*format == '%' && *(format + 1) == 'd') || (*format == '%' && *(format + 1) == 'i'))
+			{
+				int k = va_arg(aps, int);
+				char buff[12];
+				int number_length = change_to_string(k, buff);
+				int j = 0;
+
+				for (j = 0; j < number_length; j++)
+				{
+				 	 _putchar(buff[j]);
+					 no_of_characters++;
+				}
+				format++;
 			}
 		}
 		format++;
 	}
 	va_end(aps);
-	_putchar('\n');
 	return (no_of_characters);
 }
