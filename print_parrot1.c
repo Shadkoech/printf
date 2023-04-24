@@ -36,6 +36,23 @@ char *change_unsigned_int_to_binary(unsigned int number)
 	return (binary);
 }
 
+
+int main()
+{
+	unsigned int number = 2023;
+	char *binary = change_unsigned_int_to_binary(number);
+	if (binary != NULL)
+	{
+		printf("The binary representation of %u is %s\n", number, binary);
+		free(binary);
+	}
+	else
+	{
+		printf("Failed memory allocation\n");
+	}
+	return (0);
+}
+
 int change_to_string(int i, char *buffer)
 {
 	bool is_num_neg = false;
