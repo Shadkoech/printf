@@ -54,7 +54,7 @@ int _printf(const char *format, ...)
 	va_start(aps, format);
 	while (*format != '\0')
 	{
-		if (*format != '%' && (*format - 1) == '%')
+		if (*format != '%' && (*format - 1) != '%')
 		{
 			_putchar(*format);
 			no_of_characters++;
@@ -77,7 +77,7 @@ int _printf(const char *format, ...)
 			{
 				_putchar(*s);
 				no_of_characters++;
-				s++;
+				s += 2;
 			}
 		}
 		else if ((*format == '%' && *(format + 1) == 'd') || (*format == '%' && *(format + 1) == 'i'))
