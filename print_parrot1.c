@@ -6,6 +6,35 @@
 #include <stdbool.h>
 
 int change_to_string(int i, char *buffer);
+char *change_unsigned_int_to_binary(unsigned int number);
+
+char *change_unsigned_int_to_binary(unsigned int number)
+{
+	char *binary = (char*)malloc(sizeof(char) * 33);
+	
+	unsigned int no = 1 << 31;
+	int j = 0;
+	if (binary == NULL)
+	{
+		return (NULL);
+	}
+
+	binary[32] = '\0';
+	
+	for (j = 0; j < 32; j++)
+	{
+		if (number &&  no)
+		{
+			binary[j] = '1';
+		}
+		else
+		{
+			binary[j] = '0';
+		}
+		no = no >> 1;
+	}
+	return (binary);
+}
 
 int change_to_string(int i, char *buffer)
 {
@@ -86,7 +115,7 @@ int _printf(const char *format, ...)
 				}
 				format++;
 			}
-			if ((*format == '%' && *(format + 1) == 'd') || (*format == '%' && *(format + 1) == 'i'))
+			if (*(format + 1) == 'd' || *(format + 1) == 'i')
 			{
 				int k = va_arg(aps, int);
 				char buff[12];
@@ -98,6 +127,18 @@ int _printf(const char *format, ...)
 				 	 _putchar(buff[j]);
 					 no_of_characters++;
 				}
+				format++;
+			}
+			if (*(format + 1) == 'b')
+			{
+				unsigned int no = va_arg(aps, unsigned int);
+				char *binary = change_unsigned_int_to_binary(no);
+				int i = 0;
+				for (i = 0; binary[i] != '\0'; i++)
+				{
+					_putchar(binary[i]);
+				}
+				free(binary);
 				format++;
 			}
 		}
