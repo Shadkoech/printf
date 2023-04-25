@@ -6,6 +6,51 @@
 #include <stdbool.h>
 
 /**
+  *custom_convert - function that checks input string
+  *@format: pointer to char string
+  *Return: nothing
+  */
+void custom_convert(char *format, ...)
+{
+	char *c = format;
+	va_list ap;
+
+	va_start(ap, format);
+
+	while (*c)
+	{
+		if (*c == '%' && *(c + 1) == 'S')
+		{
+			char *str = va_arg(ap, char*);
+			char *b = str;
+
+			while (*b)
+			{
+				if (*b >= 32 && *b < 127)
+				{
+					putchar(*b);
+				}
+				else
+				{
+					putchar('\\');
+					putchar('x');
+					putchar("0123456789ABCDEF"[(*b >> 4) & 0xF]);
+					putchar("0123456789ABCDEF"[*b & 0xF]);
+				}
+				b++;
+			}
+			c = c + 2;
+		}
+		else
+		{
+			putchar(*c++);
+		}
+	}
+	va_end(ap);
+}
+
+
+/**
   *change_to_string - converts integer to string
   *@i: integer to be changed
   *@buffer: pointer to store converted string
