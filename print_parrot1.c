@@ -5,12 +5,24 @@
 #include <stdlib.h>
 #include <stdbool.h>
 
+/**
+  *change_to_string - converts integer to string
+  *@i: integer to be changed
+  *@buffer: pointer to store converted string
+  *Return: Always 0
+  */
 int change_to_string(int i, char *buffer);
 char *change_unsigned_int_to_binary(unsigned int number);
 
+/**
+  *change_unsigned_int_to_binary -function that takes convert integer to string
+  *@number: the integer to be converted
+  *
+  *Return: a pointer to character array
+  */
 char *change_unsigned_int_to_binary(unsigned int number)
 {
-	char *binary = (char*)malloc(sizeof(char) * 33);
+	char *binary = (char *)malloc(sizeof(char) * 33);
 	int j = 0;
 	int found_one = 0;
 
@@ -22,20 +34,25 @@ char *change_unsigned_int_to_binary(unsigned int number)
 	{
 		if ((number & (1 << j)) || found_one)
 		{
-			binary[31-j] = (number & (1 << j)) ? '1' : '0';
+			binary[31 - j] = (number & (1 << j)) ? '1' : '0';
 			found_one = 1;
 		}
 		else if (!(number & (1 << j)) && !found_one)
 		{
-			binary[31-j] = ' ';
+			binary[31 - j] = ' ';
 		}
 	}
-	
 	binary[32] = '\0';
 	return (binary);
 }
-	
 
+/**
+  *change_to_string - converts a given integer into string
+  *@i: the integer to be converted
+  *@buffer: a pointer to where the converted integer is stored
+  *
+  *Return: Always 0
+  */
 int change_to_string(int i, char *buffer)
 {
 	bool is_num_neg = false;
@@ -46,8 +63,7 @@ int change_to_string(int i, char *buffer)
 		is_num_neg = true;
 		i = -i;
 	}
-	do
-	{
+	do {
 		buffer[length++] = (i % 10) + '0';
 		i /= 10;
 	} while (i > 0);
@@ -59,11 +75,19 @@ int change_to_string(int i, char *buffer)
 	for (j = 0; j < (length / 2); j++)
 	{
 		char tmp = buffer[j];
+
 		buffer[j] = buffer[length - j - 1];
 		buffer[length - j - 1] = tmp;
 	}
 	return (length);
 }
+
+/**
+  *_putchar - a function that writes a character to stdio
+  *@c: the character to be written
+  *
+  *Return: 1 on success and -1 on error
+  */
 int _putchar(char c)
 {
 	return (write(1, &c, 1));
@@ -89,11 +113,13 @@ int _printf(const char *format, ...)
 			no_of_characters++;
 
 		}
+
 		if (*format == '%')
 		{
- 			if (*(format + 1) == 'c')
+			if (*(format + 1) == 'c')
 			{
 				char c = va_arg(aps, int);
+
 				_putchar(c);
 				no_of_characters++;
 				format++;
@@ -107,6 +133,7 @@ int _printf(const char *format, ...)
 			if (*(format + 1) == 's')
 			{
 				char *s = va_arg(aps, char *);
+
 				while (*s)
 				{
 					_putchar(*s);
@@ -115,6 +142,7 @@ int _printf(const char *format, ...)
 				}
 				format++;
 			}
+
 			if (*(format + 1) == 'd' || *(format + 1) == 'i')
 			{
 				int k = va_arg(aps, int);
@@ -124,8 +152,8 @@ int _printf(const char *format, ...)
 
 				for (j = 0; j < number_length; j++)
 				{
-				 	 _putchar(buff[j]);
-					 no_of_characters++;
+					_putchar(buff[j]);
+					no_of_characters++;
 				}
 				format++;
 			}
@@ -134,6 +162,7 @@ int _printf(const char *format, ...)
 				unsigned int no = va_arg(aps, unsigned int);
 				char *binary = change_unsigned_int_to_binary(no);
 				int i = 0;
+
 				for (i = 0; binary[i] != '\0'; i++)
 				{
 					if (binary[i] == ' ')
