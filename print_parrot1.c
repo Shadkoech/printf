@@ -138,6 +138,34 @@ int _putchar(char c)
 	return (write(1, &c, 1));
 }
 /**
+*print_unsigned_integer - this function prints the unsigned int
+*@n: the unsigned int
+*
+*Return; this is a void function
+*/
+void print_unsigned_integer(unsigned int n)
+{
+	char buffer[30];
+	int i = 0;
+
+	while (n > 0)
+	{
+		buffer[i++] = (n % 10) + '0';
+		n /= 10;
+	}
+	if (i == 0)
+	{
+		_putchar('0');
+	}
+	else
+	{
+		while (i > 0)
+		{
+			_putchar(buffer[--i]);
+		}
+	}
+}
+/**
 *_printf - prints output according to given format
 *@format: pointer to a character string
 *@...: the given format
