@@ -16,6 +16,7 @@ void print_unsigned_integer(unsigned int n);
 void custom_convert(char *format, ...);
 int change_to_string(int i, char *buffer);
 char *change_unsigned_int_to_binary(unsigned int number);
+void print_usigned_octal(int n);
 
 
 int print_char(va_list ap);
