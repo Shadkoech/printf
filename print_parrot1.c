@@ -166,6 +166,66 @@ void print_unsigned_integer(unsigned int n)
 	}
 }
 /**
+*print_unsigned_octal - prints the octall format of n
+*@n: unsigned int
+*
+*Return: void 
+*/
+void print_unsigned_octal(unsigned int n)
+{
+	char buffer[30];
+	int i = 0;
+
+	while (n > 0)
+	{
+		buffer[i++] = (n % 8) + '0';
+		n /= 8;
+	}
+	if (i == 0)
+	{
+		_putchar('0');
+	}
+	else
+	{
+		while (i > 0)
+		{
+			_putchar(buffer[--i]);
+		}
+	}
+}
+/**
+*print_hexadecimal - prints te hexadecimal format of int
+*@n: the unsigned int
+*
+*Return: Returns nothing
+*/
+void print_hexadecimal(unsigned int n, int UPPER)
+{
+	char buffer[30];
+	int i = 0;
+	int num;
+
+	while (n > 0)
+	{
+		num = n % 16;
+		buffer[i++] = num < 10 ? num + '0' : (UPPER ? 'A' : 'a') + (num - 10);
+		n /= 16;
+	}
+	if (i == 0)
+	{
+		_putchar('0');
+	}
+	else
+	{
+		while (i > 0)
+		{
+			_putchar(buffer[--i]);
+		}
+	}
+}
+
+
+/**
 *_printf - prints output according to given format
 *@format: pointer to a character string
 *@...: the given format
@@ -250,6 +310,30 @@ int _printf(const char *format, ...)
 				free(binary);
 				format++;
 			}
+			if (*(format + 1) == 'o')
+			{
+				unsigned int number = va_arg(aps, unsigned int);
+				print_unsigned_octal(number);
+				format++;
+			}
+			if (*(format + 1) == 'u')
+			{
+				unsigned int number = va_arg(aps, unsigned int);
+				print_unsigned_integer(number);
+				format++;
+			}
+			if (*(format + 1) == 'X')
+			{
+				unsigned int number = va_arg(aps, unsigned int);
+				print_hexadecimal(number, 1);
+				format++;
+			}
+			if (*(format + 1) == 'x')
+			{
+				unsigned int number = va_arg(aps, unsigned int);
+				print_hexadecimal(number, 0);
+				format++;
+			}				
 		}
 		format++;
 	}
