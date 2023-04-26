@@ -69,6 +69,7 @@ char *change_unsigned_int_to_binary(unsigned int number)
 {
 	char *binary = (char *)malloc(sizeof(char) * 33);
 	int j = 0;
+	char *binary_trim = binary;
 	int found_one = 0;
 
 	if (binary == NULL)
@@ -88,7 +89,17 @@ char *change_unsigned_int_to_binary(unsigned int number)
 		}
 	}
 	binary[32] = '\0';
-	return (binary);
+	while (*binary_trim == ' ')
+	{
+		binary_trim++;
+	}
+	if (*binary_trim == '\0')
+	{
+		*binary = '0';
+		*(binary + 1) = '\0';
+	}
+	free(binary);
+	return (binary_trim);
 }
 
 /**
