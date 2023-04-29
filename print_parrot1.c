@@ -180,7 +180,7 @@ void print_unsigned_integer(unsigned int n)
 *print_unsigned_octal - prints the octall format of n
 *@n: unsigned int
 *
-*Return: void 
+*Return: void
 */
 void print_unsigned_octal(unsigned int n)
 {
@@ -207,6 +207,7 @@ void print_unsigned_octal(unsigned int n)
 /**
 *print_hexadecimal - prints te hexadecimal format of int
 *@n: the unsigned int
+*@UPPER: the integer to be manipulated
 *
 *Return: Returns nothing
 */
@@ -324,27 +325,31 @@ int _printf(const char *format, ...)
 			if (*(format + 1) == 'o')
 			{
 				unsigned int number = va_arg(aps, unsigned int);
+
 				print_unsigned_octal(number);
 				format++;
 			}
 			if (*(format + 1) == 'u')
 			{
 				unsigned int number = va_arg(aps, unsigned int);
+
 				print_unsigned_integer(number);
 				format++;
 			}
 			if (*(format + 1) == 'X')
 			{
 				unsigned int number = va_arg(aps, unsigned int);
+
 				print_hexadecimal(number, 1);
 				format++;
 			}
 			if (*(format + 1) == 'x')
 			{
 				unsigned int number = va_arg(aps, unsigned int);
+
 				print_hexadecimal(number, 0);
 				format++;
-			}				
+			}
 		}
 		format++;
 	}
