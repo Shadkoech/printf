@@ -4,6 +4,7 @@
 #include <stdarg.h>
 #include <stdlib.h>
 #include <stdio.h>
+#include <stddef.h>
 #include <unistd.h>
 
 
@@ -19,9 +20,6 @@ char *change_unsigned_int_to_binary(unsigned int number);
 void print_unsigned_octal(unsigned int n);
 void print_hexadecimal(unsigned int n, int UPPER);
 void print_unsigned_integer(unsigned int n);
-
-
-
 int print_char(va_list ap);
 int print_string(va_list ap);
 
